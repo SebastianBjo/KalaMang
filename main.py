@@ -10,38 +10,38 @@
 # - **Real-time Timer**: Shows remaining time to catch the fish
 
 ### Fish Species (20 Total)
-**European Fish:**
+# **European Fish:**
 # - European Perch (Cardboard) - Common freshwater fish
 # - Northern Pike (Bronze) - Aggressive predator
 # - European Carp (Silver) - Large bottom-feeder
 # - Atlantic Salmon (Gold) - Prized game fish
 
-**North American Fish:**
+# **North American Fish:**
 # - Rainbow Trout (Silver) - Beautiful game fish
 # - Largemouth Bass (Gold) - Popular bass species
 # - Smallmouth Bass (Silver) - Feisty fighter
 # - Muskellunge (Diamond) - "Fish of 10,000 casts"
 
-**Asian Fish:**
+# **Asian Fish:**
 # - Koi Carp (Bronze) - Ornamental carp
 # - Asian Arowana (Trophy) - Rare and expensive
 # - Giant Mekong Catfish (Record) - Largest freshwater fish
 
-**African Fish:**
+# **African Fish:**
 # - Nile Perch (Diamond) - Massive predator
 # - Tigerfish (Gold) - Ferocious with sharp teeth
 
-**South American Fish:**
+# **South American Fish:**
 # - Peacock Bass (Silver) - Colorful Amazon fish
 # - Pirarucu (Trophy) - Prehistoric-looking giant
 
-**Ocean Fish:**
+# **Ocean Fish:**
 # - Mahi Mahi (Diamond) - Fast tropical predator
 # - Blue Marlin (Trophy) - Ultimate trophy fish
 # - Yellowfin Tuna (Gold) - Powerful ocean predator
 # - Swordfish (Diamond) - Deep-sea predator
 
-**Mythical/Record Fish:**
+# **Mythical/Record Fish:**
 # - Legendary Kraken (Record) - Mythical sea creature
 # - Ancient Coelacanth (Record) - Living fossil
 
