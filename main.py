@@ -59,7 +59,7 @@
 ### Weight System
 - Each fish has realistic weight ranges
 - Rarity affects weight multiplier
-- Record fish can weigh over 1000kg
+- Record fish can weigh over 1000
 
 ## 🎨 Visual Effects & Graphics
 
