@@ -2,8 +2,8 @@
 
 ## 🎮 Core Gameplay Features
 
-### Fishing System
-- **Timing-based Hook Setting**: Press SPACE when the red marker is in the green zone
+# ### Fishing System
+# - Timing-based Hook Setting: Press SPACE when the red marker is in the green zone
 - **Variable Difficulty**: Each fish species has different difficulty levels (1-10)
 - **Fish Escape Timer**: Limited time to set the hook before fish escapes
 - **Visual Feedback**: Hook bar changes color when set, target zone flashes
