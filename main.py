@@ -702,7 +702,7 @@ self.shop_items = [
 self.shop_selection = 0
         
         # Fish inspection
-        self.inspecting_fish = None
+ self.inspecting_fish = None
         
         # Casting system
         self.is_casting = False
