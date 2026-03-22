@@ -645,7 +645,7 @@ class Game:
         self.sound_manager = SoundManager()
         self.reward_system = RewardSystem()
 
-        # Game state variables
+        # GAME VARIABLES — must be inside __init__ with same indentation
         self.coins = 0
         self.shop_items = [
             {"name": "Worm Pack", "type": "bait", "value": "Worm", "price": 10},
@@ -682,7 +682,6 @@ class Game:
         for i, txt in enumerate(instructions):
             render = self.small_font.render(txt, True, LIGHT_GRAY)
             self.screen.blit(render, (50, SCREEN_HEIGHT - 100 + i * 20))
-        
         # Menu system
         self.menu_selection = 0
         self.menu_options = ["Start Game", "Instructions", "Quit"]
