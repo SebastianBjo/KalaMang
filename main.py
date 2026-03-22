@@ -691,7 +691,7 @@ class Game:
         self.available_baits = ["Worm"]
         self.quests = self.create_quests()
         self.rewards_earned = []
-      self.coins = 0
+        self.coins = 0
 self.shop_items = [
     {"name": "Worm Pack", "type": "bait", "value": "Worm", "price": 10},
     {"name": "Premium Worm", "type": "bait", "value": "premium_worm", "price": 25},
