@@ -645,8 +645,34 @@ class Game:
         self.sound_manager = SoundManager()
         self.reward_system = RewardSystem()
 
-        def draw_shop(self):
+def draw_shop(self):
     self.screen.fill((20, 60, 20))
+
+    title = self.font.render("Fishing Shop", True, WHITE)
+    self.screen.blit(title, (SCREEN_WIDTH//2 - 100, 50))
+
+    coins_text = self.font.render(f"Coins: {self.coins}", True, GOLD)
+    self.screen.blit(coins_text, (50, 50))
+
+    y = 150
+    for i, item in enumerate(self.shop_items):
+        color = YELLOW if i == self.shop_selection else WHITE
+
+        text = f"{item['name']} - {item['price']} coins"
+        render = self.font.render(text, True, color)
+        self.screen.blit(render, (100, y))
+
+        y += 50
+
+    instructions = [
+        "UP/DOWN: Select",
+        "ENTER: Buy",
+        "ESC: Exit shop"
+    ]
+
+    for i, txt in enumerate(instructions):
+        render = self.small_font.render(txt, True, LIGHT_GRAY)
+        self.screen.blit(render, (50, SCREEN_HEIGHT - 100 + i * 20))
 
     title = self.font.render("Fishing Shop", True, WHITE)
     self.screen.blit(title, (SCREEN_WIDTH//2 - 100, 50))
