@@ -636,7 +636,7 @@ class Game:
         pygame.display.set_caption("European Forest Fishing Adventure")
         self.clock = pygame.time.Clock()
         self.state = GameState.MENU
-        self.player = HumanCharacter(SCREEN_WIDTH//2, SCREEN_HEIGHT//2)
+        self.player = HumanCharacter(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         self.fishing_minigame = FishingMinigame()
         self.background = self.create_forest_background()
         self.font = pygame.font.Font(None, 36)
@@ -645,7 +645,6 @@ class Game:
         self.sound_manager = SoundManager()
         self.reward_system = RewardSystem()
 
-        # GAME VARIABLES — must be inside __init__ with same indentation
         self.coins = 0
         self.shop_items = [
             {"name": "Worm Pack", "type": "bait", "value": "Worm", "price": 10},
@@ -660,7 +659,7 @@ class Game:
         self.screen.fill((20, 60, 20))
 
         title = self.font.render("Fishing Shop", True, WHITE)
-        self.screen.blit(title, (SCREEN_WIDTH//2 - 100, 50))
+        self.screen.blit(title, (SCREEN_WIDTH // 2 - 100, 50))
 
         coins_text = self.font.render(f"Coins: {self.coins}", True, GOLD)
         self.screen.blit(coins_text, (50, 50))
@@ -682,9 +681,6 @@ class Game:
         for i, txt in enumerate(instructions):
             render = self.small_font.render(txt, True, LIGHT_GRAY)
             self.screen.blit(render, (50, SCREEN_HEIGHT - 100 + i * 20))
-        # Menu system
-        self.menu_selection = 0
-        self.menu_options = ["Start Game", "Instructions", "Quit"]
         
         # Game state variables
         self.fish_shadow_timer = 0
