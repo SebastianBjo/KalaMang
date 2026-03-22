@@ -46,6 +46,94 @@ class GameState(Enum):
     QUEST = "quest"
     PAUSED = "paused"
 
+#Shop
+SHOP = "shop"
+self.coins = 0
+
+self.shop_items = [
+    {"name": "Worm Pack", "type": "bait", "value": "Worm", "price": 10},
+    {"name": "Premium Worm", "type": "bait", "value": "premium_worm", "price": 25},
+    {"name": "Diamond Lure", "type": "bait", "value": "diamond_lure", "price": 100},
+    {"name": "Golden Rod", "type": "rod", "value": "golden_rod", "price": 75},
+    {"name": "Master Rod", "type": "rod", "value": "master_rod", "price": 200}
+]
+
+self.shop_selection = 0
+# Earn coins based on rarity
+rarity_reward = {
+    Rarity.CARDBOARD: 5,
+    Rarity.BRONZE: 10,
+    Rarity.SILVER: 20,
+    Rarity.GOLD: 40,
+    Rarity.DIAMOND: 80,
+    Rarity.TROPHY: 150,
+    Rarity.RECORD: 300
+}
+
+earned = rarity_reward[fish.rarity]
+self.coins += earned
+self.catch_message += f" +{earned} coins!"
+
+if event.key == pygame.K_b and self.state == GameState.PLAYING:
+    self.state = GameState.SHOP
+
+if self.state == GameState.SHOP:
+    if event.key == pygame.K_UP:
+        self.shop_selection = (self.shop_selection - 1) % len(self.shop_items)
+    elif event.key == pygame.K_DOWN:
+        self.shop_selection = (self.shop_selection + 1) % len(self.shop_items)
+    elif event.key == pygame.K_RETURN:
+        item = self.shop_items[self.shop_selection]
+
+        if self.coins >= item["price"]:
+            self.coins -= item["price"]
+
+            if item["type"] == "bait":
+                if item["value"] not in self.available_baits:
+                    self.available_baits.append(item["value"])
+                self.current_bait = item["value"]
+
+            elif item["type"] == "rod":
+                self.rewards_earned.append(
+                    Reward(RewardType.ROD, item["name"], "Bought from shop", item["value"])
+                )
+
+            self.sound_manager.play_sound('menu_select')
+
+def draw_shop(self):
+    self.screen.fill((20, 60, 20))
+
+    title = self.font.render("Fishing Shop", True, WHITE)
+    self.screen.blit(title, (SCREEN_WIDTH//2 - 100, 50))
+
+    coins_text = self.font.render(f"Coins: {self.coins}", True, GOLD)
+    self.screen.blit(coins_text, (50, 50))
+
+    y = 150
+    for i, item in enumerate(self.shop_items):
+        color = YELLOW if i == self.shop_selection else WHITE
+
+        text = f"{item['name']} - {item['price']} coins"
+        render = self.font.render(text, True, color)
+        self.screen.blit(render, (100, y))
+
+        y += 50
+
+    instructions = [
+        "UP/DOWN: Select",
+        "ENTER: Buy",
+        "ESC: Exit shop"
+    ]
+
+    for i, txt in enumerate(instructions):
+        render = self.small_font.render(txt, True, LIGHT_GRAY)
+        self.screen.blit(render, (50, SCREEN_HEIGHT - 100 + i * 20))
+
+elif self.state == GameState.SHOP:
+    self.draw_shop()
+
+controls = "WASD: Move | SPACE: Cast | Mouse: Aim | C: Cancel | I: Inventory | G: Glossary | Q: Quests | B: Shop"
+
 # Rarity levels
 class Rarity(Enum):
     CARDBOARD = "Cardboard"
