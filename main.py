@@ -749,13 +749,13 @@ def create_forest_background(self):
             
         return background
         
-    def handle_events(self):
+def handle_events(self):
       for event in pygame.event.get():
     if event.type == pygame.QUIT:
         running = False
 
-    elif event.type == pygame.MOUSEBUTTONDOWN:
-        if self.state == GameState.PLAYING and not self.player.is_casting:
+elif event.type == pygame.MOUSEBUTTONDOWN:
+         if self.state == GameState.PLAYING and not self.player.is_casting:
             self.is_casting = True
             self.cast_target = event.pos
             self.player.start_casting(event.pos[0], event.pos[1])
