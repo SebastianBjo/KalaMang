@@ -751,7 +751,7 @@ def create_forest_background(self):
         
 def handle_events(self):
       for event in pygame.event.get():
-    if event.type == pygame.QUIT:
+      if event.type == pygame.QUIT:
         running = False
 
 elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -760,10 +760,10 @@ elif event.type == pygame.MOUSEBUTTONDOWN:
             self.cast_target = event.pos
             self.player.start_casting(event.pos[0], event.pos[1])
 
-    elif event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_ESCAPE:
+elif event.type == pygame.KEYDOWN:
+if event.key == pygame.K_ESCAPE:
             if self.state == GameState.PLAYING:
-                self.state = GameState.MENU
+               self.state = GameState.MENU
             elif self.state == GameState.FISHING:
                 self.fishing_minigame.is_active = False
                 self.player.stop_fishing()
