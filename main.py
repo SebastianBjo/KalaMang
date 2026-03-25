@@ -751,7 +751,7 @@ def create_forest_background(self):
         
 def handle_events(self):
       for event in pygame.event.get():
-      if event.type == pygame.QUIT:
+         if event.type == pygame.QUIT:
         running = False
 
 elif event.type == pygame.MOUSEBUTTONDOWN:
