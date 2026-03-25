@@ -709,7 +709,7 @@ self.is_casting = False
 self.cast_target = None
 self.mouse_pos = (0, 0)
         
-    def create_quests(self):
+def create_quests(self):
         return [
             Quest("first_fish", "First Catch", "Catch your first fish", 1, 0, 
                   self.reward_system.get_quest_reward("first_fish"), False),
@@ -723,7 +723,7 @@ self.mouse_pos = (0, 0)
                   self.reward_system.get_quest_reward("trophy_hunter"), False)
         ]
         
-    def create_forest_background(self):
+def create_forest_background(self):
         # Create a parallax forest background
         background = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
         background.fill(DARK_GREEN)
