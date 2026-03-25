@@ -45,7 +45,6 @@ class GameState(Enum):
     GLOSSARY = "glossary"
     QUEST = "quest"
     PAUSED = "paused"
-    SHOP = "shop"
 
 # Rarity levels
 class Rarity(Enum):
@@ -636,7 +635,7 @@ class Game:
         pygame.display.set_caption("European Forest Fishing Adventure")
         self.clock = pygame.time.Clock()
         self.state = GameState.MENU
-        self.player = HumanCharacter(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+        self.player = HumanCharacter(SCREEN_WIDTH//2, SCREEN_HEIGHT//2)
         self.fishing_minigame = FishingMinigame()
         self.background = self.create_forest_background()
         self.font = pygame.font.Font(None, 36)
@@ -644,43 +643,10 @@ class Game:
         self.effects = VisualEffects()
         self.sound_manager = SoundManager()
         self.reward_system = RewardSystem()
-
-        self.coins = 0
-        self.shop_items = [
-            {"name": "Worm Pack", "type": "bait", "value": "Worm", "price": 10},
-            {"name": "Premium Worm", "type": "bait", "value": "premium_worm", "price": 25},
-            {"name": "Diamond Lure", "type": "bait", "value": "diamond_lure", "price": 100},
-            {"name": "Golden Rod", "type": "rod", "value": "golden_rod", "price": 75},
-            {"name": "Master Rod", "type": "rod", "value": "master_rod", "price": 200}
-        ]
-        self.shop_selection = 0
-
-    def draw_shop(self):
-        self.screen.fill((20, 60, 20))
-
-        title = self.font.render("Fishing Shop", True, WHITE)
-        self.screen.blit(title, (SCREEN_WIDTH // 2 - 100, 50))
-
-        coins_text = self.font.render(f"Coins: {self.coins}", True, GOLD)
-        self.screen.blit(coins_text, (50, 50))
-
-        y = 150
-        for i, item in enumerate(self.shop_items):
-            color = YELLOW if i == self.shop_selection else WHITE
-            text = f"{item['name']} - {item['price']} coins"
-            render = self.font.render(text, True, color)
-            self.screen.blit(render, (100, y))
-            y += 50
-
-        instructions = [
-            "UP/DOWN: Select",
-            "ENTER: Buy",
-            "ESC: Exit shop"
-        ]
-
-        for i, txt in enumerate(instructions):
-            render = self.small_font.render(txt, True, LIGHT_GRAY)
-            self.screen.blit(render, (50, SCREEN_HEIGHT - 100 + i * 20))
+        
+        # Menu system
+        self.menu_selection = 0
+        self.menu_options = ["Start Game", "Instructions", "Quit"]
         
         # Game state variables
         self.fish_shadow_timer = 0
@@ -691,25 +657,16 @@ class Game:
         self.available_baits = ["Worm"]
         self.quests = self.create_quests()
         self.rewards_earned = []
-        self.coins = 0
-self.shop_items = [
-    {"name": "Worm Pack", "type": "bait", "value": "Worm", "price": 10},
-    {"name": "Premium Worm", "type": "bait", "value": "premium_worm", "price": 25},
-    {"name": "Diamond Lure", "type": "bait", "value": "diamond_lure", "price": 100},
-    {"name": "Golden Rod", "type": "rod", "value": "golden_rod", "price": 75},
-    {"name": "Master Rod", "type": "rod", "value": "master_rod", "price": 200}
-]
-self.shop_selection = 0
         
         # Fish inspection
-self.inspecting_fish = None
+        self.inspecting_fish = None
         
         # Casting system
-self.is_casting = False
-self.cast_target = None
-self.mouse_pos = (0, 0)
+        self.is_casting = False
+        self.cast_target = None
+        self.mouse_pos = (0, 0)
         
-def create_quests(self):
+    def create_quests(self):
         return [
             Quest("first_fish", "First Catch", "Catch your first fish", 1, 0, 
                   self.reward_system.get_quest_reward("first_fish"), False),
@@ -723,7 +680,7 @@ def create_quests(self):
                   self.reward_system.get_quest_reward("trophy_hunter"), False)
         ]
         
-def create_forest_background(self):
+    def create_forest_background(self):
         # Create a parallax forest background
         background = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
         background.fill(DARK_GREEN)
@@ -749,94 +706,64 @@ def create_forest_background(self):
             
         return background
         
-def handle_events(self):
-      for event in pygame.event.get():
-      if event.type == pygame.QUIT:
-running = False
-
-elif event.type == pygame.MOUSEBUTTONDOWN:
-         if self.state == GameState.PLAYING and not self.player.is_casting:
-            self.is_casting = True
-            self.cast_target = event.pos
-            self.player.start_casting(event.pos[0], event.pos[1])
-
-elif event.type == pygame.KEYDOWN:
-if event.key == pygame.K_ESCAPE:
-            if self.state == GameState.PLAYING:
-               self.state = GameState.MENU
-            elif self.state == GameState.FISHING:
-                self.fishing_minigame.is_active = False
-                self.player.stop_fishing()
-                self.state = GameState.PLAYING
-            elif self.state in [GameState.INVENTORY, GameState.GLOSSARY, GameState.QUEST, GameState.FISH_CAUGHT]:
-                self.state = GameState.PLAYING
-
-        if event.key == pygame.K_SPACE:
-            if self.state == GameState.FISHING:
-                if self.fishing_minigame.set_hook():
-                    self.catch_fish()  # this triggers the coin popup automatically
-                else:
-                    self.state = GameState.PLAYING
-            elif self.state == GameState.FISH_CAUGHT:
-                self.state = GameState.PLAYING
-            elif self.state == GameState.PLAYING and not self.player.is_casting:
-                # Cast to center of water area
-                target_x = SCREEN_WIDTH // 2
-                target_y = SCREEN_HEIGHT - 100
-                self.is_casting = True
-                self.cast_target = (target_x, target_y)
-                self.player.start_casting(target_x, target_y)
-
-        if event.key == pygame.K_c and self.state == GameState.PLAYING:
-            # Cancel casting/fishing
-            self.player.stop_fishing()
-            self.is_casting = False
-            self.cast_target = None
-
-        if event.key == pygame.K_i and self.state == GameState.PLAYING:
-            self.state = GameState.INVENTORY
-
-        if event.key == pygame.K_g and self.state == GameState.PLAYING:
-            self.state = GameState.GLOSSARY
-
-        if event.key == pygame.K_q and self.state == GameState.PLAYING:
-            self.state = GameState.QUEST
-
-# --- Catch fish function with coin popup ---
-def catch_fish(self):
-    fish = self.fishing_minigame.get_caught_fish()  # adjust if your code uses another method
-
-    # Coin reward based on rarity
-    rarity_reward = {
-        Rarity.CARDBOARD: 5,
-        Rarity.BRONZE: 10,
-        Rarity.SILVER: 20,
-        Rarity.GOLD: 40,
-        Rarity.DIAMOND: 80,
-        Rarity.TROPHY: 150,
-        Rarity.RECORD: 300
-    }
-    earned = rarity_reward.get(fish.rarity, 0)
-    self.coins += earned
-
-    # Popup message
-    self.catch_message = f"You caught a {fish.name}! +{earned} coins"
-    self.catch_message_timer = 180  # show message for 3 seconds at 60 FPS
-
-    # Reset fishing state
-    self.state = GameState.FISH_CAUGHT
-    self.is_casting = False
-    self.cast_target = None
-    self.player.stop_fishing()
-
-# --- In your draw/update method ---
-if hasattr(self, "catch_message") and self.catch_message_timer > 0:
-    font = pygame.font.Font(None, 36)
-    text = font.render(self.catch_message, True, (255, 215, 0))
-    screen.blit(text, (SCREEN_WIDTH // 2 - text.get_width() // 2, SCREEN_HEIGHT // 2 - 50))
-    self.catch_message_timer -= 1
-
-
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+                
+            if event.type == pygame.MOUSEMOTION:
+                self.mouse_pos = event.pos
+                
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # Left click
+                    if self.state == GameState.PLAYING and not self.player.is_casting:
+                        # Start casting to mouse position
+                        self.is_casting = True
+                        self.cast_target = event.pos
+                        self.player.start_casting(event.pos[0], event.pos[1])
+                        
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    if self.state == GameState.PLAYING:
+                        self.state = GameState.MENU
+                    elif self.state == GameState.FISHING:
+                        self.fishing_minigame.is_active = False
+                        self.player.stop_fishing()
+                        self.state = GameState.PLAYING
+                    elif self.state in [GameState.INVENTORY, GameState.GLOSSARY, GameState.QUEST, GameState.FISH_CAUGHT]:
+                        self.state = GameState.PLAYING
+                        
+                if event.key == pygame.K_SPACE:
+                    if self.state == GameState.FISHING:
+                        if self.fishing_minigame.set_hook():
+                            self.catch_fish()
+                        else:
+                            self.state = GameState.PLAYING
+                    elif self.state == GameState.FISH_CAUGHT:
+                        self.state = GameState.PLAYING
+                    elif self.state == GameState.PLAYING and not self.player.is_casting:
+                        # Cast to center of water area
+                        target_x = SCREEN_WIDTH // 2
+                        target_y = SCREEN_HEIGHT - 100
+                        self.is_casting = True
+                        self.cast_target = (target_x, target_y)
+                        self.player.start_casting(target_x, target_y)
+                        
+                if event.key == pygame.K_c and self.state == GameState.PLAYING:
+                    # Cancel casting/fishing
+                    self.player.stop_fishing()
+                    self.is_casting = False
+                    self.cast_target = None
+                        
+                if event.key == pygame.K_i and self.state == GameState.PLAYING:
+                    self.state = GameState.INVENTORY
+                    
+                if event.key == pygame.K_g and self.state == GameState.PLAYING:
+                    self.state = GameState.GLOSSARY
+                    
+                if event.key == pygame.K_q and self.state == GameState.PLAYING:
+                    self.state = GameState.QUEST
+                    
                 # Fish inspection controls
                 if self.state == GameState.FISH_CAUGHT:
                     if event.key == pygame.K_k:  # Keep fish
@@ -1238,7 +1165,7 @@ if hasattr(self, "catch_message") and self.catch_message_timer > 0:
             y_offset += 20
         
         # Draw controls
-controls = "WASD: Move | SPACE: Cast | Mouse: Aim | C: Cancel | I: Inventory | G: Glossary | Q: Quests | B: Shop"
+        controls = "WASD: Move | SPACE: Cast | Mouse: Aim | C: Cancel | I: Inventory | G: Glossary | Q: Quests"
         text = self.small_font.render(controls, True, WHITE)
         self.screen.blit(text, (10, SCREEN_HEIGHT - 30))
         
@@ -1339,54 +1266,6 @@ controls = "WASD: Move | SPACE: Cast | Mouse: Aim | C: Cancel | I: Inventory | G
             
             if self.state == GameState.PLAYING:
                 self.player.move(keys)
-
-                if event.key == pygame.K_b and self.state == GameState.PLAYING:
-    self.state = GameState.SHOP
-if event.type == pygame.KEYDOWN:
-
-    # --- existing controls ---
-    if event.key == pygame.K_ESCAPE:
-        ...
-    
-    if event.key == pygame.K_SPACE:
-        ...
-
-    if event.key == pygame.K_i:
-        ...
-
-    if event.key == pygame.K_g:
-        ...
-
-    if event.key == pygame.K_q:
-        ...
-
-    # ✅ OPEN SHOP (put this near other keybinds)
-    if event.key == pygame.K_b and self.state == GameState.PLAYING:
-        self.state = GameState.SHOP
-
-    # ✅ SHOP CONTROLS (PUT THIS AT THE BOTTOM)
-    if self.state == GameState.SHOP:
-        if event.key == pygame.K_UP:
-            self.shop_selection = (self.shop_selection - 1) % len(self.shop_items)
-        elif event.key == pygame.K_DOWN:
-            self.shop_selection = (self.shop_selection + 1) % len(self.shop_items)
-        elif event.key == pygame.K_RETURN:
-            item = self.shop_items[self.shop_selection]
-
-            if self.coins >= item["price"]:
-                self.coins -= item["price"]
-
-                if item["type"] == "bait":
-                    if item["value"] not in self.available_baits:
-                        self.available_baits.append(item["value"])
-                    self.current_bait = item["value"]
-
-                elif item["type"] == "rod":
-                    self.rewards_earned.append(
-                        Reward(RewardType.ROD, item["name"], "Bought from shop", item["value"])
-                    )
-
-                self.sound_manager.play_sound('menu_select')
                 
                 # Update casting
                 if self.player.is_casting:
@@ -1425,9 +1304,6 @@ if event.type == pygame.KEYDOWN:
                 self.draw_glossary()
             elif self.state == GameState.QUEST:
                 self.draw_quest()
-                elif self.state == GameState.SHOP:
-    self.draw_shop()
-
                 
             pygame.display.flip()
             self.clock.tick(FPS)
