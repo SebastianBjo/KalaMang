@@ -751,8 +751,8 @@ def create_forest_background(self):
         
 def handle_events(self):
       for event in pygame.event.get():
-         if event.type == pygame.QUIT:
-         running = False
+      if event.type == pygame.QUIT:
+running = False
 
 elif event.type == pygame.MOUSEBUTTONDOWN:
          if self.state == GameState.PLAYING and not self.player.is_casting:
