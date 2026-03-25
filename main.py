@@ -705,9 +705,9 @@ self.shop_selection = 0
 self.inspecting_fish = None
         
         # Casting system
-        self.is_casting = False
-        self.cast_target = None
-        self.mouse_pos = (0, 0)
+self.is_casting = False
+self.cast_target = None
+self.mouse_pos = (0, 0)
         
     def create_quests(self):
         return [
