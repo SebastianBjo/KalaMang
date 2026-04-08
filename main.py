@@ -204,7 +204,7 @@ class Sprite:
 class HumanCharacter(Sprite):
     def __init__(self, x, y):
         super().__init__(x, y, 40, 60, BROWN)
-        self.speed = 5
+        self.speed = 4
         self.facing_right = True
         self.is_casting = False
         self.cast_timer = 0
@@ -213,7 +213,7 @@ class HumanCharacter(Sprite):
         self.cast_progress = 0
         self.animation_state = "idle"  # idle, walking, casting, fishing
         self.animation_timer = 0
-        self.arm_swing = 0
+        self.arm_swing = 1
         
     def move(self, keys):
         was_moving = False
